@@ -1,7 +1,0 @@
-package net.modfun.block;
-
-import net.minecraft.block.Block;
-
-public class BlockContainer extends Block {
-
-}

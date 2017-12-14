@@ -1,9 +1,0 @@
-package net.modfun.register;
-
-public class TileEntityRender {
-
-	public TileEntityRender() {
-		// TODO Auto-generated constructor stub
-	}
-
-}

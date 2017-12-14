@@ -1,9 +1,0 @@
-package net.modfun.block;
-
-public class TMBlockContainer {
-
-	public TMBlockContainer() {
-		// TODO Auto-generated constructor stub
-	}
-
-}

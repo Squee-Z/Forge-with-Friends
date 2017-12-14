@@ -1,9 +1,0 @@
-package net.modfun.block;
-
-public class ModBlocks {
-
-	public ModBlocks() {
-		// TODO Auto-generated constructor stub
-	}
-
-}

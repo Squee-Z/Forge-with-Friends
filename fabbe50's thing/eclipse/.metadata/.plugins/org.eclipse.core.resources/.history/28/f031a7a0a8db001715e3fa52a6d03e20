@@ -1,7 +1,0 @@
-package net.modfun.gui;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-
-public class GuiContain extends GuiContainer {
-​	
-}

@@ -1,9 +1,0 @@
-package net.modfun.tileentity;
-
-public class TIleEntityCounter {
-
-	public TIleEntityCounter() {
-		// TODO Auto-generated constructor stub
-	}
-
-}
