@@ -1,0 +1,9 @@
+package net.modfun.tileentity;
+
+public class TileEntityComp {
+
+	public TileEntityComp() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

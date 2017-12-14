@@ -1,0 +1,16 @@
+[
+{
+  "modid": "modfun",
+  "name": "TESTMOD",
+  "description": "This is something..... I guess",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["LemonSquee_Z"],
+  "credits": "Hi",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

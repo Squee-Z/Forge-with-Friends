@@ -1,0 +1,9 @@
+package net.modfun.register;
+
+public class UsefullFunction {
+
+	public UsefullFunction() {
+		// TODO Auto-generated constructor stub
+	}
+
+}
