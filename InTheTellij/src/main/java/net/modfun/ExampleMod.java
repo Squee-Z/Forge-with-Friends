@@ -21,11 +21,10 @@ public class ExampleMod
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        // some example code
     	proxy.initCommon();
     	proxy.preInitCommon();
     	proxy.postInitCommon();
-        System.out.println("DIRT BLOCK >> "+Blocks.DIRT.getUnlocalizedName());
+        System.out.println("Starting Init Process");
     }
     public static final CreativeTabs modTab = new CreativeTabs("modtabs"){
 
