@@ -1,11 +1,7 @@
-package net.modfun.example;
+package net.modfun.register;
 
 import net.minecraft.util.math.Vec3d;
 
-/**
- * User: The Grey Ghost
- * Date: 12/01/2015
- */
 public class UsefulFunctions
 {
   /** linearly interpolate for y between [x1, y1] to [x2, y2] using x

@@ -1,15 +1,21 @@
 package net.modfun.proxy;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.modfun.block.BlockMBE21;
-import net.modfun.block.tileentity.TileEntityData;
-import net.modfun.example.TileEntityCompressor;
+import net.modfun.ExampleMod;
+import net.modfun.block.BlockTileEntityComp;
+import net.modfun.register.RegistBlock;
+import net.modfun.tileentity.TileEntityComp;
 
 public class CommonProxy {
-	 public static BlockMBE21 blockMBE21;  // this holds the unique instance of your block
-	  public static ItemBlock itemBlockMBE21; // this holds the unique instance of the itemblock corresponding to the block
+
+	 public static BlockTileEntityComp blockTileEntityData;  // this holds the unique instance of your block
+	  public static ItemBlock itemBlockTileEntityData; // this holds the unique instance of the ItemBlock corresponding to your block
 
 	  public static void preInitCommon()
 	  {
@@ -25,26 +31,36 @@ public class CommonProxy {
 	    //  |  stationary_water  +       water          |
 	    //  +--------------------+----------------------+
 	    //
-		  
-	    blockMBE21 = (BlockMBE21)(new BlockMBE21().setUnlocalizedName("compressor"));
-	    blockMBE21.setRegistryName("Compressor");
-	    ForgeRegistries.BLOCKS.register(blockMBE21);
+	    blockTileEntityData = (BlockTileEntityComp)(new BlockTileEntityComp().setUnlocalizedName("comp"));
+	    blockTileEntityData.setRegistryName("Comp");
+	    ForgeRegistries.BLOCKS.register(blockTileEntityData);
 
 	    // We also need to create and register an ItemBlock for this block otherwise it won't appear in the inventory
-	    itemBlockMBE21 = new ItemBlock(blockMBE21);
-	    itemBlockMBE21.setRegistryName(blockMBE21.getRegistryName());
-	    ForgeRegistries.ITEMS.register(itemBlockMBE21);
+	    itemBlockTileEntityData = new ItemBlock(blockTileEntityData);
+	    itemBlockTileEntityData.setRegistryName(blockTileEntityData.getRegistryName());
+	    ForgeRegistries.ITEMS.register(itemBlockTileEntityData);
 
 	    // Each of your tile entities needs to be registered with a name that is unique to your mod.
-	    GameRegistry.registerTileEntity(TileEntityCompressor.class, "Compressor");
+	    GameRegistry.registerTileEntity(TileEntityComp.class, "mbe20_tileentity_data_tile_entity");
 	  }
 
 	  public static void initCommon()
 	  {
-		  
 	  }
 
 	  public static void postInitCommon()
 	  {
 	  }
+	public void init(FMLInitializationEvent event)
+	{
+		 RegistBlock.init();
+		
+	}
+	public void registerItemRenderer(Item item, int meta, String id) {
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(ExampleMod.MODID + ":" + id, "inventory"));
+	}
+
+	public void postInit() {
+        RegistBlock.voidLists();
+    }
 }

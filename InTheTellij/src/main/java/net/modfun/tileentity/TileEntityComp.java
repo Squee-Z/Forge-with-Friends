@@ -1,4 +1,9 @@
-package net.modfun.block.tileentity;
+package net.modfun.tileentity;
+
+import java.util.Arrays;
+import java.util.Random;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
@@ -16,19 +21,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
-import java.util.Random;
-
-/**
- * User: brandon3055
- * Date: 06/01/2015
- *
- * This is a simple tile entity which stores some data
- * When placed, it waits for 10 seconds then replaces itself with a random block
- */
-public class TileEntityData extends TileEntity implements ITickable {
-
+public class TileEntityComp extends TileEntity implements ITickable{
+	
 	private final int INVALID_VALUE = -1;
 	private int ticksLeftTillDisappear = INVALID_VALUE;  // the time (in ticks) left until the block disappears
 
