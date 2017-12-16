@@ -12,39 +12,38 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 @Mod.EventBusSubscriber
 public class ItemRegistry {
-	
+
     public static Map<String, Item> ITEMS = new HashMap<String, Item>();
 
     public static final Item copper = new ItemCopper();
     public static final Item copperWrench = new ItemCopperWrench();
+    public static final Item pack = new HandJetpack();
 
-    
-    
     /**
      * Register all the items into the event handler before the pre-init
+     *
      * @param event
      */
 
     @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event){
-        IForgeRegistry<Item> registry = event.getRegistry();
-        registry.register(copper);
-        registry.register(copperWrench);
-        
-        regItemModels(copper, copperWrench);
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        quickReg(event, copperWrench, copper, pack);
+
+
     }
 
-    
-
-    /**
-     * Render the models for the items
-     * @param items
+    /*
+     * @param Registers Items quickly
      */
-    public static void regItemModels(Item...items){
-        for(Item item : items){
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+    public static void quickReg(RegistryEvent.Register<Item> event, Item... item) {
+        for (Item itemI : item) {
+            IForgeRegistry<Item> registry = event.getRegistry();
+            registry.registerAll(itemI);
+            ModelLoader.setCustomModelResourceLocation(itemI, 0, new ModelResourceLocation(itemI.getRegistryName(), "inventory"));
         }
     }
+    /*
+     * Render the models for the items
+     */
 
-   
 }

@@ -1,6 +1,5 @@
 package net.modfun;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -9,9 +8,9 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.modfun.item.ItemRegistry;
 import net.modfun.proxy.CommonProxy;
+import net.modfun.register.RegistBlock;
 import net.modfun.register.RegistRecipe;
 
 @Mod(modid = Reference.MOD_ID, version = ExampleMod.VERSION)
@@ -27,16 +26,16 @@ public class ExampleMod
         // some example code
         System.out.println("DIRT BLOCK >> "+Blocks.DIRT.getUnlocalizedName());
         RegistRecipe.init();
-        
+        RegistBlock.init();
+
     }
 
 
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
-        
 
-       
+
     }
     public static final CreativeTabs modTab = new CreativeTabs("modtabs"){
 

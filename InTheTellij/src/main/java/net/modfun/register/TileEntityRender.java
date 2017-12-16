@@ -1,6 +1,5 @@
 package net.modfun.register;
 
-import java.awt.Color;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
@@ -28,7 +27,7 @@ public class TileEntityRender	 extends TileEntitySpecialRenderer<TileEntityComp>
 	   *                     ticks, to make animations smoother.  For example - if the frame rate is steady at 80 frames per second,
 	   *                     this method will be called four times per tick, with partialTicks spaced 0.25 apart, (eg) 0, 0.25, 0.5, 0.75
 	   * @param blockDamageProgress the progress of the block being damaged (0 - 10), if relevant.  -1 if not relevant.
-	   * @param alpha I'm not sure what this is used for; the name suggests alpha blending but Vanilla doesn't appear to use it
+	   * @param alpha Transparencey for the block
 	   */
 	  public void render(TileEntityComp tileEntity, double relativeX, double relativeY, double relativeZ,
 	                     float partialTicks, int blockDamageProgress, float alpha) {

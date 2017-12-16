@@ -3,7 +3,6 @@ package net.modfun.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -22,8 +21,7 @@ public class BlockTileEntityComp extends Block
   {
     super(Material.ROCK);
     this.setCreativeTab(Reference.TAB);   // the block will appear on the Blocks tab in creative
-    setRegistryName("comp");
-    setUnlocalizedName(Reference.MOD_ID+":comp");
+
     
   }
 
