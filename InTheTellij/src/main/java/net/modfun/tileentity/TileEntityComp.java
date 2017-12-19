@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class TileEntityComp extends TileEntity implements ITickable{
 	
 	private final int INVALID_VALUE = -1;
-	private int ticksLeftTillDisappear = INVALID_VALUE;  // the time (in ticks) left until the block disappears
+	private int ticksLeftTillDisappear = INVALID_VALUE;
 
 	// set by the block upon creation
 	public void setTicksLeftTillDisappear(int ticks)
@@ -32,11 +32,7 @@ public class TileEntityComp extends TileEntity implements ITickable{
 		ticksLeftTillDisappear = ticks;
 	}
 
-	// When the world loads from disk, the server needs to send the TileEntity information to the client
-	//  it uses getUpdatePacket(), getUpdateTag(), onDataPacket(), and handleUpdateTag() to do this:
-  //  getUpdatePacket() and onDataPacket() are used for one-at-a-time TileEntity updates
-  //  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
-	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
+
 	@Override
   @Nullable
   public SPacketUpdateTileEntity getUpdatePacket()
@@ -52,8 +48,7 @@ public class TileEntityComp extends TileEntity implements ITickable{
 		readFromNBT(pkt.getNbtCompound());
 	}
 
-  /* Creates a tag containing the TileEntity information, used by vanilla to transmit from server to client
- */
+
   @Override
   public NBTTagCompound getUpdateTag()
   {
@@ -62,44 +57,35 @@ public class TileEntityComp extends TileEntity implements ITickable{
     return nbtTagCompound;
   }
 
-  /* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client
- */
+
   @Override
   public void handleUpdateTag(NBTTagCompound tag)
   {
     this.readFromNBT(tag);
   }
 
-  // This is where you save any data that you don't want to lose when the tile entity unloads
-	// In this case, we only need to store the ticks left until explosion, but we store a bunch of other
-	//  data as well to serve as an example.
-	// NBTexplorer is a very useful tool to examine the structure of your NBT saved data and make sure it's correct:
-	//   http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/1262665-nbtexplorer-nbt-editor-for-windows-and-mac
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound parentNBTTagCompound)
 	{
-		super.writeToNBT(parentNBTTagCompound); // The super call is required to save the tiles location
+		super.writeToNBT(parentNBTTagCompound);
 
 		parentNBTTagCompound.setInteger("ticksLeft", ticksLeftTillDisappear);
-		// alternatively - could use parentNBTTagCompound.setTag("ticksLeft", new NBTTagInt(ticksLeftTillDisappear));
-
-		// some examples of other NBT tags - browse NBTTagCompound or search for the subclasses of NBTBase for more examples
 
 		parentNBTTagCompound.setString("testString", testString);
 
-		NBTTagCompound blockPosNBT = new NBTTagCompound();        // NBTTagCompound is similar to a Java HashMap
+		NBTTagCompound blockPosNBT = new NBTTagCompound();
 		blockPosNBT.setInteger("x", testBlockPos.getX());
 		blockPosNBT.setInteger("y", testBlockPos.getY());
 		blockPosNBT.setInteger("z", testBlockPos.getZ());
 		parentNBTTagCompound.setTag("testBlockPos", blockPosNBT);
 
 		NBTTagCompound itemStackNBT = new NBTTagCompound();
-		testItemStack.writeToNBT(itemStackNBT);                     // make sure testItemStack is not null first!
+		testItemStack.writeToNBT(itemStackNBT);
 		parentNBTTagCompound.setTag("testItemStack", itemStackNBT);
 
 		parentNBTTagCompound.setIntArray("testIntArray", testIntArray);
 
-		NBTTagList doubleArrayNBT = new NBTTagList();                     // an NBTTagList is similar to a Java ArrayList
+		NBTTagList doubleArrayNBT = new NBTTagList();
 		for (double value : testDoubleArray) {
 			doubleArrayNBT.appendTag(new NBTTagDouble(value));
 		}
@@ -110,7 +96,7 @@ public class TileEntityComp extends TileEntity implements ITickable{
 			Double value = testDoubleArrayWithNulls[i];
 			if (value != null) {
 				NBTTagCompound dataForThisSlot = new NBTTagCompound();
-				dataForThisSlot.setInteger("i", i+1);   // avoid using 0, so the default when reading a missing value (0) is obviously invalid
+				dataForThisSlot.setInteger("i", i+1);
 				dataForThisSlot.setDouble("v", value);
 				doubleArrayWithNullsNBT.appendTag(dataForThisSlot);
 			}
@@ -119,26 +105,23 @@ public class TileEntityComp extends TileEntity implements ITickable{
     return parentNBTTagCompound;
 	}
 
-	// This is where you load the data that you saved in writeToNBT
+
 	@Override
 	public void readFromNBT(NBTTagCompound parentNBTTagCompound)
 	{
-		super.readFromNBT(parentNBTTagCompound); // The super call is required to load the tiles location
+		super.readFromNBT(parentNBTTagCompound);
 
-		// important rule: never trust the data you read from NBT, make sure it can't cause a crash
-
-		final int NBT_INT_ID = 3;					// see NBTBase.createNewByType()
+		final int NBT_INT_ID = 3;
 		int readTicks = INVALID_VALUE;
-		if (parentNBTTagCompound.hasKey("ticksLeft", NBT_INT_ID)) {  // check if the key exists and is an Int. You can omit this if a default value of 0 is ok.
+		if (parentNBTTagCompound.hasKey("ticksLeft", NBT_INT_ID)) {
 			readTicks = parentNBTTagCompound.getInteger("ticksLeft");
 			if (readTicks < 0) readTicks = INVALID_VALUE;
 		}
 		ticksLeftTillDisappear = readTicks;
 
-		// some examples of other NBT tags - browse NBTTagCompound or search for the subclasses of NBTBase for more
 
 		String readTestString = null;
-		final int NBT_STRING_ID = 8;          // see NBTBase.createNewByType()
+		final int NBT_STRING_ID = 8;
 		if (parentNBTTagCompound.hasKey("testString", NBT_STRING_ID)) {
 			readTestString = parentNBTTagCompound.getString("testString");
 		}
@@ -166,7 +149,7 @@ public class TileEntityComp extends TileEntity implements ITickable{
 			System.err.println("testIntArray mismatch:" + readIntArray);
 		}
 
-		final int NBT_DOUBLE_ID = 6;					// see NBTBase.createNewByType()
+		final int NBT_DOUBLE_ID = 6;
 		NBTTagList doubleArrayNBT = parentNBTTagCompound.getTagList("testDoubleArray", NBT_DOUBLE_ID);
 		int numberOfEntries = Math.min(doubleArrayNBT.tagCount(), testDoubleArray.length);
 		double [] readDoubleArray = new double[numberOfEntries];
@@ -193,18 +176,16 @@ public class TileEntityComp extends TileEntity implements ITickable{
 		}
 	}
 
-	// Since our TileEntity implements ITickable, we get an update method which is called once per tick (20 times / second)
-	// When the timer elapses, replace our block with a random one.
+
 	@Override
 	public void update() {
-		if (!this.hasWorld()) return;  // prevent crash
+		if (!this.hasWorld()) return;
 		World world = this.getWorld();
-		if (world.isRemote) return;   // don't bother doing anything on the client side.
-		if (ticksLeftTillDisappear == INVALID_VALUE) return;  // do nothing until the time is valid
+		if (world.isRemote) return;
+		if (ticksLeftTillDisappear == INVALID_VALUE) return;
 		--ticksLeftTillDisappear;
-//		this.markDirty();            // if you update a tileentity variable on the server and this should be communicated to the client,
-// 																		you need to markDirty() to force a resend.  In this case, the client doesn't need to know
-		if (ticksLeftTillDisappear > 0) return;   // not ready yet
+
+		if (ticksLeftTillDisappear > 0) return;
 
 		Block [] blockChoices = {Blocks.DIAMOND_BLOCK, Blocks.OBSIDIAN, Blocks.AIR, Blocks.TNT, Blocks.YELLOW_FLOWER, Blocks.SAPLING, Blocks.WATER};
 		Random random = new Random();

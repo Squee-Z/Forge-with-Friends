@@ -32,20 +32,10 @@ public class TileEntityRender	 extends TileEntitySpecialRenderer<TileEntityComp>
 	  public void render(TileEntityComp tileEntity, double relativeX, double relativeY, double relativeZ,
 	                     float partialTicks, int blockDamageProgress, float alpha) {
 
-	    if (!(tileEntity instanceof TileEntityComp)) return; // should never happen
+	    if (!(tileEntity instanceof TileEntityComp)) return;
 	    TileEntityComp tileEntityMBE21 = tileEntity;
 
-	    // the gem changes its appearance and animation as the player approaches.
-	    // When the player is a long distance away, the gem is dark, resting in the hopper, and does not rotate.
-	    // As the player approaches closer than 16 blocks, the gem first starts to glow brighter and to spin anti-clockwise
-	    // When the player gets closer than 4 blocks, the gem is at maximum speed and brightness, and starts to levitate above the pedestal
-	    // Once the player gets closer than 2 blocks, the gem reaches maximum height.
 
-	    // the appearance and animation of the gem is hence made up of several parts:
-	    // 1) the colour of the gem, which is contained in the tileEntity
-	    // 2) the brightness of the gem, which depends on player distance
-	    // 3) the distance that the gem rises above the pedestal, which depends on player distance
-	    // 4) the speed at which the gem is spinning, which depends on player distance.
 
 	    final double pedestalCentreOffsetX = 0.5;
 	    final double pedestalCentreOffsetY = 0.8;
@@ -79,20 +69,11 @@ public class TileEntityRender	 extends TileEntitySpecialRenderer<TileEntityComp>
 	            MIN_REV_PER_SEC, MAX_REV_PER_SEC);
 
 	    try {
-	      // save the transformation matrix and the rendering attributes, so that we can restore them after rendering.  This
-	      //   prevents us disrupting any vanilla TESR that render after ours.
-	      //  using try..finally is not essential but helps make it more robust in case of exceptions
-	      // For further information on rendering using the Tessellator, see http://greyminecraftcoder.blogspot.co.at/2014/12/the-tessellator-and-worldrenderer-18.html
+
 	      GL11.glPushMatrix();
 	      GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 
-	      // First we need to set up the translation so that we render our gem with the bottom point at 0,0,0
-	      // when the renderTileEntityAt method is called, the tessellator is set up so that drawing a dot at [0,0,0] corresponds to the player's eyes
-	      // This means that, in order to draw a dot at the TileEntity [x,y,z], we need to translate the reference frame by the difference between the
-	      // two points, i.e. by the [relativeX, relativeY, relativeZ] passed to the method.  If you then draw a cube from [0,0,0] to [1,1,1], it will
-	      // render exactly over the top of the TileEntity's block.
-	      // In this example, the zero point of our model needs to be in the middle of the block, not at the [x,y,z] of the block, so we need to
-	      // add an extra offset as well, i.e. [gemCentreOffsetX, gemCentreOffsetY, gemCentreOffsetZ]
+
 	      GlStateManager.translate(relativeX + gemCentreOffsetX, relativeY + gemCentreOffsetY, relativeZ + gemCentreOffsetZ);
 	      float s = 0;
 	      Random r = new Random();

@@ -27,7 +27,8 @@ public class ItemRegistry {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        quickReg(event, copperWrench, copper, pack);
+        Item kat = new QuickItem("modfun:kat", "kat");
+        quickReg(event, copperWrench, copper, pack, kat);
 
 
     }
